@@ -1,78 +1,52 @@
-package com.example.a5validation;
+package com.example.a6sharedpreference;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.content.SharedPreferences;
 import android.widget.EditText;
-import android.widget.Toast;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
-    EditText username;
-    EditText age;
-    EditText phone;
-    EditText pass;
-    Button b1;
-    Pattern USERNAME_PATTERN=Pattern.compile("^[A-Za-z]\\w{5,30}$");    //Alphabets 6-30 letters
-    Pattern PASSWORD_PATTERN =Pattern.compile("^" +
-            "(?=.*[@#$%^&+*=])" +     // at least 1 special character
-            "(?=\\S+$)" +            // no white spaces
-            ".{8,}" +                  // at least 8 characters
-            "(.*[0-9].*)"+              //number
-            "(.*[A-Z].*)"+              //uppercase
-            "$");
-    Pattern AGE_PATTERN=Pattern.compile("^[0-9]{1,2}$");
-    Pattern PHONE_PATTERN=Pattern.compile("^[7-9][0-9]{9}$");       //Begins with 0 or 91,then 7 or 8 or 9,then contains 9 digits
 
+    private EditText name, age,phone,pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        name = findViewById(R.id.name);
+        age = findViewById(R.id.age);
+        phone= findViewById(R.id.phone);
+        pass= findViewById(R.id.pass);
+    }
 
-        username=findViewById(R.id.name);
-        age=findViewById(R.id.age);
-        phone=findViewById(R.id.phone);
-        pass=findViewById(R.id.pass);
-        b1=findViewById(R.id.button);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String inpName=username.getText().toString();
-                String inpAge=age.getText().toString();
-                String inpPh=phone.getText().toString();
-                String inpPass=pass.getText().toString();
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+
+        String s1 = sh.getString("name", "");
+        int a = sh.getInt("age",0 );
+        int pn=sh.getInt("phone number",0);
+        String pw=sh.getString("password","");
+        name.setText(s1);
+        age.setText(String.valueOf(a));
+        phone.setText(String.valueOf(pn));
+        pass.setText(pw);
+    }
 
 
-                if(inpName.isEmpty()){
-                    Toast.makeText(MainActivity.this,  "Name Field is Empty", Toast.LENGTH_SHORT).show();
-                }
-                if(inpAge.isEmpty()){
-                    Toast.makeText(MainActivity.this,  "Age field is Empty", Toast.LENGTH_SHORT).show();
-                }
-                if(inpPh.isEmpty()){
-                    Toast.makeText(MainActivity.this,  "Phone field is Empty", Toast.LENGTH_SHORT).show();
-                }
-                if(inpPass.isEmpty()){
-                    Toast.makeText(MainActivity.this,  "Pass field is Empty", Toast.LENGTH_SHORT).show();
-                }
-                if (!USERNAME_PATTERN.matcher(inpName).matches()){
-                    username.setError("Enter 6-30 characters");
-                }
-                if (!AGE_PATTERN.matcher(inpAge).matches()){
-                    age.setError("Enter 2 digits");
-                }
-                if (!PHONE_PATTERN.matcher(inpPh).matches()){
-                    phone.setError("Contains only 10 digits");
-                }
-                if (!PASSWORD_PATTERN.matcher(inpPass).matches()){
-                    pass.setError("Password is too weak[small letter,digits and special characters and end with capitals]");
-                }
-                else Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        myEdit.putString("name", name.getText().toString());
+        myEdit.putInt("age", Integer.parseInt(age.getText().toString()));
+        myEdit.putInt("phone number",Integer.parseInt(phone.getText().toString()));
+        myEdit.putString("password", pass.getText().toString());
+        myEdit.apply();
     }
 }
