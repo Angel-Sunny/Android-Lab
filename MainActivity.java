@@ -1,52 +1,70 @@
-package com.example.activitylifecycle;
+package com.example.a3simplecalcu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    float res=0;
+    EditText n1;
+    EditText n2;
+    Button ba;
+    Button bs;
+    Button bm;
+    Button bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(MainActivity.this, "OnCreate called", Toast.LENGTH_SHORT).show();
+        n1=findViewById(R.id.num1);
+        n2=findViewById(R.id.num2);
+        ba=findViewById(R.id.add);
+        bs=findViewById(R.id.sub);
+        bm=findViewById(R.id.mul);
+        bd=findViewById(R.id.div);
+
+
+
+        ba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float a=Float.parseFloat(n1.getText().toString());
+                float b=Float.parseFloat(n2.getText().toString());
+                res=a+b;
+                Toast.makeText(MainActivity.this, "Sum="+res, Toast.LENGTH_SHORT).show();
+            }
+        });
+        bs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float a=Float.parseFloat(n1.getText().toString());
+                float b=Float.parseFloat(n2.getText().toString());
+                res=a-b;
+                Toast.makeText(MainActivity.this, "Difference="+res, Toast.LENGTH_SHORT).show();
+            }
+        });
+        bm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float a=Float.parseFloat(n1.getText().toString());
+                float b=Float.parseFloat(n2.getText().toString());
+                res=a*b;
+                Toast.makeText(MainActivity.this, "Product="+res, Toast.LENGTH_SHORT).show();
+            }
+        });
+        bd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float a=Float.parseFloat(n1.getText().toString());
+                float b=Float.parseFloat(n2.getText().toString());
+                res=a/b;
+                Toast.makeText(MainActivity.this, "Quotient="+res, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(MainActivity.this, "onStart Called", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(MainActivity.this, "onResume called", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Toast.makeText(MainActivity.this, "onPause Called", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Toast.makeText(MainActivity.this, "onStop Called", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(MainActivity.this, "onRestart Called", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Toast.makeText(MainActivity.this, "onDestroy called", Toast.LENGTH_SHORT).show();
-    }
 }
