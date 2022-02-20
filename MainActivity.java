@@ -1,50 +1,52 @@
-package com.example.myapplication;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+package com.example.activitylifecycle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
 public class MainActivity extends AppCompatActivity {
 
-    EditText username;
-    EditText password;
-    Button loginbutton;
-    String name="admin";
-    String pass="password";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        username =findViewById(R.id.uname);
-        password=findViewById(R.id.pwd);
-        loginbutton=findViewById(R.id.logid);
-         loginbutton.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 String ipname=username.getText().toString();
-                 String ippass=password.getText().toString();
+        Toast.makeText(MainActivity.this, "OnCreate called", Toast.LENGTH_SHORT).show();
+    }
 
-                if(ipname.isEmpty() || ippass.isEmpty())
-                {
-                    Toast.makeText(MainActivity.this,"Fields are empty",Toast.LENGTH_LONG).show();
-                }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(MainActivity.this, "onStart Called", Toast.LENGTH_SHORT).show();
+    }
 
-                else {
-                    if(ipname.equals(name) && ippass.equals(pass))
-                    {
-                        Toast.makeText(MainActivity.this,"Login Successful",Toast.LENGTH_LONG).show();
-                    }
-                    if(!ipname.equals(name))
-                        Toast.makeText(MainActivity.this, "Username incorrect", Toast.LENGTH_SHORT).show();
-                    if(!ippass.equals(pass))
-                        Toast.makeText(MainActivity.this, "Password incorrect", Toast.LENGTH_SHORT).show();
-                }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(MainActivity.this, "onResume called", Toast.LENGTH_SHORT).show();
+    }
 
-             }
-         });
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(MainActivity.this, "onPause Called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(MainActivity.this, "onStop Called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(MainActivity.this, "onRestart Called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(MainActivity.this, "onDestroy called", Toast.LENGTH_SHORT).show();
     }
 }
