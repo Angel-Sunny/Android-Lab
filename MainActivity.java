@@ -1,5 +1,4 @@
-package com.example.a4maincalculator;
-
+package com.example.a5validation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,194 +6,73 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
-    EditText e1;
-    Button b1,b2,b3,b4,b5,b6,b7,b8,b9,plus,b0,minus,mul,b10,div,bC,equal;
-    float a,b;
-    boolean Addition,Subtract,Multiplication,Division;
+    EditText username;
+    EditText age;
+    EditText phone;
+    EditText pass;
+    Button b1;
+    Pattern USERNAME_PATTERN=Pattern.compile("^[A-Za-z]\\w{5,30}$");    //Alphabets 6-30 letters
+    Pattern PASSWORD_PATTERN =Pattern.compile("^" +
+            "(?=.*[@#$%^&+*=])" +     // at least 1 special character
+            "(?=\\S+$)" +            // no white spaces
+            ".{8,}" +                  // at least 8 characters
+            "(.*[0-9].*)"+              //number
+            "(.*[A-Z].*)"+              //uppercase
+            "$");
+    Pattern AGE_PATTERN=Pattern.compile("^[0-9]{1,2}$");
+    Pattern PHONE_PATTERN=Pattern.compile("^[7-9][0-9]{9}$");       //Begins with 0 or 91,then 7 or 8 or 9,then contains 9 digits
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        e1=findViewById(R.id.editTextTextPersonName);
-        b1=findViewById(R.id.button20);
-        b2=findViewById(R.id.button21);
-        b3=findViewById(R.id.button22);
-        b4=findViewById(R.id.button23);
-        b5=findViewById(R.id.button24);
-        b6=findViewById(R.id.button25);
-        b7=findViewById(R.id.button26);
-        b8=findViewById(R.id.button27);
-        b9=findViewById(R.id.button28);
-        plus=findViewById(R.id.button29);
-        b0=findViewById(R.id.button30);
-        minus=findViewById(R.id.button31);
-        mul=findViewById(R.id.button32);
-        b10=findViewById(R.id.button33);
-        div=findViewById(R.id.button34);
-        bC=findViewById(R.id.button35);
-        equal=findViewById(R.id.button36);
-
-
+        username=findViewById(R.id.name);
+        age=findViewById(R.id.age);
+        phone=findViewById(R.id.phone);
+        pass=findViewById(R.id.pass);
+        b1=findViewById(R.id.button);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                e1.setText(e1.getText() + "1");
-            }
-        });
-
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
-                e1.setText(e1.getText() + "2");
-            }
-        });
-
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "3");
-            }
-        });
-
-        b4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "4");
-            }
-        });
-
-        b5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "5");
-            }
-        });
-
-        b6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "6");
-            }
-        });
-
-        b7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "7");
-            }
-        });
-
-        b8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "8");
-            }
-        });
-
-        b9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "9");
-            }
-        });
+                String inpName=username.getText().toString();
+                String inpAge=age.getText().toString();
+                String inpPh=phone.getText().toString();
+                String inpPass=pass.getText().toString();
 
 
-
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (e1== null) {
-                    e1.setText("");
-                } else {
-                    a = Float.parseFloat(e1.getText() + "");
-                    Addition = true;
-                    e1.setText(null);
+                if(inpName.isEmpty()){
+                    Toast.makeText(MainActivity.this,  "Name Field is Empty", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        b0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + "0");
-            }
-        });
-
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                a = Float.parseFloat(e1.getText() + "");
-                Subtract = true;
-                e1.setText(null);
-            }
-        });
-
-        mul.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                a = Float.parseFloat(e1.getText() + "");
-                Multiplication = true;
-                e1.setText(null);
-            }
-        });
-
-        b10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText(e1.getText() + ".");
-            }
-        });
-
-        div.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                a = Float.parseFloat(e1.getText() + "");
-                Division = true;
-                e1.setText(null);
-            }
-        });
-
-        equal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                b = Float.parseFloat(e1.getText() + "");
-
-                if (Addition == true) {
-                    e1.setText(a + b + "");
-                    Addition = false;
+                if(inpAge.isEmpty()){
+                    Toast.makeText(MainActivity.this,  "Age field is Empty", Toast.LENGTH_SHORT).show();
                 }
-
-                if (Subtract == true) {
-                    e1.setText(a - b + "");
-                    Subtract = false;
+                if(inpPh.isEmpty()){
+                    Toast.makeText(MainActivity.this,  "Phone field is Empty", Toast.LENGTH_SHORT).show();
                 }
-
-                if (Multiplication == true) {
-                    e1.setText(a * b + "");
-                    Multiplication = false;
+                if(inpPass.isEmpty()){
+                    Toast.makeText(MainActivity.this,  "Pass field is Empty", Toast.LENGTH_SHORT).show();
                 }
-
-                if (Division == true) {
-                    e1.setText(a / b + "");
-                    Division = false;
+                if (!USERNAME_PATTERN.matcher(inpName).matches()){
+                    username.setError("Enter 6-30 characters");
                 }
+                if (!AGE_PATTERN.matcher(inpAge).matches()){
+                    age.setError("Enter 2 digits");
+                }
+                if (!PHONE_PATTERN.matcher(inpPh).matches()){
+                    phone.setError("Contains only 10 digits");
+                }
+                if (!PASSWORD_PATTERN.matcher(inpPass).matches()){
+                    pass.setError("Password is too weak[small letter,digits and special characters and end with capitals]");
+                }
+                else Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
         });
-
-        bC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e1.setText("");
-            }
-        });
-
-
-
     }
 }
